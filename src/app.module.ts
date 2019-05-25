@@ -5,6 +5,7 @@ import { CatsController } from './cats/cats.controller';
 import { AuthorController } from './author/author.controller';
 import { GraphQLModule } from '@nestjs/graphql';
 import { databaseProviders } from './db/database.providers';
+import { IdeaController } from './idea/idea.controller';
 
 @Module({
   imports: [
@@ -12,7 +13,7 @@ import { databaseProviders } from './db/database.providers';
     //   typePaths: ['./**/*.graphql'],
     // }),
   ],
-  controllers: [AppController, CatsController, AuthorController],
+  controllers: [AppController, CatsController, AuthorController, IdeaController],
   providers: [AppService, ...databaseProviders],
   exports: [...databaseProviders],
 })
