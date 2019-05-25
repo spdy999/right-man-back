@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
 import { Author } from '../author/author.entity';
+import { Idea } from '../idea/idea.entity';
 
 export const databaseProviders = [
   {
@@ -8,7 +9,7 @@ export const databaseProviders = [
       const sequelize = new Sequelize(
         'postgres://username:password@db:5432/rightman',
       );
-      sequelize.addModels([Author]);
+      sequelize.addModels([Author, Idea]);
       await sequelize.sync();
       return sequelize;
     },
