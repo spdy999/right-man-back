@@ -1,11 +1,11 @@
 import { Sequelize } from 'sequelize';
 
-export const dbConnection = () => {
+export const dbConnection = async () => {
   const sequelize = new Sequelize(
     'postgres://username:password@db:5432/rightman',
   );
 
-  sequelize
+  return await sequelize
     .authenticate()
     .then(() => {
       console.log('Connection has been established successfully.');

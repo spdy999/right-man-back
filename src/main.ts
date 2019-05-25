@@ -6,8 +6,8 @@ import { dbConnection } from './pg-connection';
 async function bootstrap() {
   const PORT = process.env.PORT || 5001;
   const app = await NestFactory.create(AppModule);
-  dbConnection();
 
+  await dbConnection();
   const options = new DocumentBuilder()
     .setTitle('Right-Man API')
     .setDescription('The right-man API description')
