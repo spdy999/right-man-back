@@ -5,14 +5,15 @@ import {
   PrimaryKey,
   CreatedAt,
   IsUUID,
+  AutoIncrement,
 } from 'sequelize-typescript';
 
 @Table({ tableName: 'idea' })
 export class Idea extends Model<Idea> {
-  @IsUUID(4)
   @PrimaryKey
+  @AutoIncrement
   @Column
-  id: string;
+  id: number;
 
   @CreatedAt
   created: Date;

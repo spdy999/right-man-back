@@ -9,7 +9,7 @@ export const databaseProviders = [
       const sequelize = new Sequelize(
         'postgres://username:password@db:5432/rightman',
       );
-      sequelize.addModels([Author, Idea]);
+      sequelize.addModels([Idea]);
       await sequelize.sync();
       return sequelize;
     },
