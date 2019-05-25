@@ -4,10 +4,12 @@ import {
   Column,
   PrimaryKey,
   CreatedAt,
+  IsUUID,
 } from 'sequelize-typescript';
 
-@Table
+@Table({ tableName: 'author' })
 export class Author extends Model<Author> {
+  @IsUUID(4)
   @PrimaryKey
   @Column
   id: string;
