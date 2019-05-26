@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { IdeaService } from './idea.service';
 import { IdeaDTO } from './idea.dto';
-import { Idea } from 'dist/idea/idea.entity';
+import { Idea } from './idea.entity';
 
 @Controller('idea')
 export class IdeaController {
