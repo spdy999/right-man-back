@@ -4,7 +4,6 @@ import {
   Column,
   PrimaryKey,
   CreatedAt,
-  IsUUID,
   AutoIncrement,
 } from 'sequelize-typescript';
 

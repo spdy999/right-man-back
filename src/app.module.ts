@@ -3,12 +3,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CatsController } from './cats/cats.controller';
 import { AuthorController } from './author/author.controller';
-import { GraphQLModule } from '@nestjs/graphql';
 import { databaseProviders } from './db/database.providers';
 import { IdeaController } from './idea/idea.controller';
 import { IdeaModule } from './idea/idea.module';
 import { IdeaService } from './idea/idea.service';
 import { ideaProviders } from './idea/idea.providers';
+import { APP_FILTER } from '@nestjs/core';
+import { HttpErrorFilter } from './shared/http-error.filter';
 
 @Module({
   imports: [
@@ -23,7 +24,16 @@ import { ideaProviders } from './idea/idea.providers';
     AuthorController,
     IdeaController,
   ],
-  providers: [AppService, IdeaService, ...databaseProviders, ...ideaProviders],
+  providers: [
+    AppService,
+    IdeaService,
+    ...databaseProviders,
+    ...ideaProviders,
+    {
+      provide: APP_FILTER,
+      useClass: HttpErrorFilter,
+    },
+  ],
   exports: [...databaseProviders],
 })
 export class AppModule {}
