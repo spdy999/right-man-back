@@ -10,7 +10,7 @@ import { IdeaService } from './idea.service';
 import { IdeaDTO } from './idea.dto';
 import { Idea } from './idea.entity';
 
-@Controller('idea')
+@Controller('api/idea')
 export class IdeaController {
   constructor(private readonly ideaService: IdeaService) {}
   @Get()

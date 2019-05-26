@@ -12,6 +12,9 @@ import { APP_FILTER } from '@nestjs/core';
 import { HttpErrorFilter } from './shared/http-error.filter';
 import { GraphQLModule } from '@nestjs/graphql';
 import { UserModule } from './user/user.module';
+import { UserController } from './user/user.controller';
+import { UserService } from './user/user.service';
+import { userProviders } from './user/user.provider';
 
 @Module({
   imports: [IdeaModule, UserModule],
@@ -21,12 +24,15 @@ import { UserModule } from './user/user.module';
     CatsController,
     AuthorController,
     IdeaController,
+    UserController,
   ],
   providers: [
     AppService,
     IdeaService,
+    UserService,
     ...databaseProviders,
     ...ideaProviders,
+    ...userProviders,
     {
       provide: APP_FILTER,
       useClass: HttpErrorFilter,

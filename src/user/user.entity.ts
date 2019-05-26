@@ -4,8 +4,11 @@ import {
   Column,
   CreatedAt,
   DataType,
+  BeforeCreate,
 } from 'sequelize-typescript';
-// import * as bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcryptjs';
+import * as jwt from 'jsonwebtoken';
+import { UserResponseObject } from './user.dto';
 import { Logger } from '@nestjs/common';
 
 @Table({ tableName: 'user' })
@@ -21,16 +24,34 @@ export class User extends Model<User> {
 
   @Column({ type: DataType.TEXT })
   password: string;
+
+  @BeforeCreate
+  static async hashPassword(user: User) {
+    user.password = await bcrypt.hash(user.password, 10);
+  }
+
+  toResponseObject(showToken: boolean = true): UserResponseObject {
+    const { id, created, username, token } = this;
+    const responseObj = { id, created, username, token };
+    if (showToken) {
+      responseObj.token = token;
+    }
+    return responseObj;
+  }
+
+  async comparePassword(attempt: string): Promise<boolean> {
+    return bcrypt.compare(attempt, this.password);
+  }
+
+  private get token() {
+    const { id, username } = this;
+    return jwt.sign(
+      {
+        id,
+        username,
+      },
+      process.env.JWT_SECRET || 'SECRET',
+      { expiresIn: '7d' },
+    );
+  }
 }
-
-// User.beforeCreate(async (user: User, options) => {
-//   try {
-//     // const hash = await hashPassword(user.password);
-//     // user.password = hash;
-//     user.password = await bcrypt.hash(user.password, 10);
-//   } catch (error) {
-//     Logger.error(error);
-//   }
-// });
-
-// TODO:implement toResponseObject() {} in the sequelize-typescript

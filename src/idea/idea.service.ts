@@ -11,12 +11,11 @@ export class IdeaService {
   ) {}
 
   async showAll(): Promise<Idea[]> {
-    return await this.ideaRepository.findAll<Idea>();
+    const ideas = await this.ideaRepository.findAll<Idea>();
+    return ideas;
   }
 
   async create(data: IdeaDTO): Promise<Idea> {
-    Logger.log('====================');
-    Logger.log(data);
     return await this.ideaRepository.create(data);
   }
 }
