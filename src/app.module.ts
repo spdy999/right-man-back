@@ -17,8 +17,11 @@ import { UserService } from './user/user.service';
 import { userProviders } from './user/user.provider';
 
 @Module({
-  imports: [IdeaModule, UserModule],
-  // imports: [GraphQLModule.forRoot({}), IdeaModule, UserModule],
+  imports: [
+    GraphQLModule.forRoot({ typePaths: ['./**/*.graphql'] }),
+    IdeaModule,
+    UserModule,
+  ],
   controllers: [
     AppController,
     CatsController,
