@@ -1,0 +1,10 @@
+type Idea {
+  id: ID!
+  created: String!
+  idea: String!
+  description: String!
+}
+
+type Query {
+  ideas: [Idea!]
+}
