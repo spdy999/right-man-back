@@ -9,9 +9,7 @@ import {
 
 @Table({ tableName: 'idea' })
 export class Idea extends Model<Idea> {
-  @PrimaryKey
-  @AutoIncrement
-  @Column
+  @Column({ primaryKey: true, autoIncrement: true })
   id: number;
 
   @CreatedAt

@@ -10,14 +10,12 @@ import { IdeaService } from './idea/idea.service';
 import { ideaProviders } from './idea/idea.providers';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpErrorFilter } from './shared/http-error.filter';
+import { GraphQLModule } from '@nestjs/graphql';
+import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [
-    // GraphQLModule.forRoot({
-    //   typePaths: ['./**/*.graphql'],
-    // }),
-    IdeaModule,
-  ],
+  imports: [IdeaModule, UserModule],
+  // imports: [GraphQLModule.forRoot({}), IdeaModule, UserModule],
   controllers: [
     AppController,
     CatsController,
