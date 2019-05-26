@@ -33,18 +33,11 @@ export class UserService {
   }
   async register(data: UserDTO): Promise<UserResponseObject> {
     const { username } = data;
-    // this.checkExistUser(username);
-    const user = await this.userRepository.findOne<User>({
-      where: { username },
-    });
-    if (user) {
-      throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
-    }
-    const user2 = await this.userRepository.create(data);
-    return user2.toResponseObject();
+    await this.checkExistUser(username);
+    const user = await this.userRepository.create(data);
+    return user.toResponseObject();
   }
 
-  // TODO: FIX throw exception but request not stop
   private async checkExistUser(username: string) {
     const user = await this.userRepository.findOne<User>({
       where: { username },
