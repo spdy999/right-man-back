@@ -1,4 +1,11 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { IdeaService } from './idea.service';
 import { IdeaDTO } from './idea.dto';
 import { Idea } from 'dist/idea/idea.entity';
@@ -7,8 +14,12 @@ import { Idea } from 'dist/idea/idea.entity';
 export class IdeaController {
   constructor(private readonly ideaService: IdeaService) {}
   @Get()
-  showAllIdeas(): Promise<Idea[]> {
-    return this.ideaService.showAll();
+  async showAllIdeas(): Promise<Idea[]> {
+    const ideas = await this.ideaService.showAll();
+    if (!ideas) {
+      throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+    }
+    return ideas;
   }
 
   @Post()
