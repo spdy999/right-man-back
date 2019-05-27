@@ -20,9 +20,9 @@ export class UserResolver {
     return this.userService.showAll();
   }
 
-  @ResolveProperty()
-  async ideas() {
-    // const { id } = user;
-    return await this.ideaService.showAll();
-  }
+  // @ResolveProperty()
+  // async ideas() {
+  //   // const { id } = user;
+  //   return await this.ideaService.showAll();
+  // }
 }

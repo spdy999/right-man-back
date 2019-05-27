@@ -15,7 +15,7 @@ export class UserService {
 
   async showAll(): Promise<UserResponseObject[]> {
     const users = await this.userRepository.findAll<User>();
-    return users.map(user => user.toResponseObject());
+    return users.map(user => user.toResponseObject(false));
   }
 
   async login(data: UserDTO): Promise<UserResponseObject> {
@@ -29,13 +29,13 @@ export class UserService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    return user.toResponseObject();
+    return user.toResponseObject(true);
   }
   async register(data: UserDTO): Promise<UserResponseObject> {
     const { username } = data;
     await this.checkExistUser(username);
     const user = await this.userRepository.create(data);
-    return user.toResponseObject();
+    return user.toResponseObject(true);
   }
 
   private async checkExistUser(username: string) {
