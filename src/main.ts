@@ -4,7 +4,7 @@ import { dbConnection } from './pg-connection';
 import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
-  const PORT = process.env.PORT || 5001;
+  const PORT = process.env.PORT || 5000;
   const app = await NestFactory.create(AppModule);
 
   await dbConnection();
@@ -12,4 +12,5 @@ async function bootstrap() {
   await app.listen(PORT);
   Logger.log(`Server is running on PORT ${PORT}`);
 }
+
 bootstrap();
