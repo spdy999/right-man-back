@@ -4,6 +4,7 @@ import {
   ExecutionContext,
   HttpException,
   HttpStatus,
+  Logger,
 } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
 import { GqlExecutionContext } from '@nestjs/graphql';
@@ -16,10 +17,14 @@ export class AuthGuard implements CanActivate {
       if (!request.headers.authorization) {
         return false;
       }
-      request.user = await this.validateToken(request.headers.authorization, request);
+      request.user = await this.validateToken(
+        request.headers.authorization,
+        request,
+      );
       return true;
     } else {
       const ctx: any = GqlExecutionContext.create(context);
+      Logger.error(ctx.args);
       if (!ctx.headers.authorization) {
         return false;
       }
@@ -38,7 +43,10 @@ export class AuthGuard implements CanActivate {
 
     try {
       // TODO: JWT_SECRET should be like this?
-      request.user = await jwt.verify(token, process.env.JWT_SECRET || 'SECRET');
+      request.user = await jwt.verify(
+        token,
+        process.env.JWT_SECRET || 'SECRET',
+      );
 
       return true;
     } catch (err) {

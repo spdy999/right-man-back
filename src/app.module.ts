@@ -11,7 +11,7 @@ import { UserModule } from './user/user.module';
   imports: [
     GraphQLModule.forRoot({
       typePaths: ['./**/*.graphql'],
-      context: ({req}) => ({headers: req.headers}),
+      context: ({ req }) => ({ headers: req.headers }),
     }),
     IdeaModule,
     UserModule,

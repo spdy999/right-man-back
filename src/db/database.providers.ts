@@ -7,7 +7,8 @@ export const databaseProviders = [
     provide: 'SEQUELIZE',
     useFactory: async () => {
       const sequelize = new Sequelize(
-        'postgres://username:password@db:5432/rightman',
+        process.env.DATABASE_URL ||
+          'postgres://username:password@db:5432/rightman',
       );
       sequelize.addModels([Idea, User]);
       await sequelize.sync();

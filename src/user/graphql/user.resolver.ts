@@ -1,17 +1,12 @@
-import {
-  Resolver,
-  Query,
-  Args,
-  Mutation,
-} from '@nestjs/graphql';
+import { Resolver, Query, Args, Mutation, Context } from '@nestjs/graphql';
 import { UserService } from '../user.service';
 import { UserDTO } from '../user.dto';
+import { UseGuards, Logger } from '@nestjs/common';
+import { AuthGuard } from '../../shared/auth.guard';
 
 @Resolver('User')
 export class UserResolver {
-  constructor(
-    private userService: UserService,
-  ) {}
+  constructor(private userService: UserService) {}
 
   @Query()
   users(@Args('page') page: number) {
@@ -23,21 +18,26 @@ export class UserResolver {
     return this.userService.read(username);
   }
 
-  @Query()
-  whoami() {
-  // whoami(@Args('username') username: string) {
-    return;
-  }
+  // @Query()
+  // @UseGuards(new AuthGuard())
+  // whoami(@Context('user') user) {
+  //   // Logger.error(user);
+  //   const { username } = user;
+  //   return this.userService.read(username);
+  // }
 
   @Mutation()
-  login(@Args('username') username: string, @Args('password') password: string) {
+  login(
+    @Args('username') username: string,
+    @Args('password') password: string,
+  ) {
     const user: UserDTO = { username, password };
     return this.userService.login(user);
   }
 
   @Mutation()
-  register(@Args() { username, password}) {
-    const user: UserDTO = {username, password};
+  register(@Args() { username, password }) {
+    const user: UserDTO = { username, password };
     return this.userService.register(user);
   }
 

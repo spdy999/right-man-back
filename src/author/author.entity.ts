@@ -1,18 +1,11 @@
-import {
-  Table,
-  Model,
-  Column,
-  PrimaryKey,
-  CreatedAt,
-  IsUUID,
-} from 'sequelize-typescript';
+import { Table, Model, Column, CreatedAt } from 'sequelize-typescript';
 
 @Table({ tableName: 'author' })
 export class Author extends Model<Author> {
-  @IsUUID(4)
-  @PrimaryKey
-  @Column
-  id: string;
+  // @IsUUID(4)
+  // @PrimaryKey
+  // @Column
+  // id: string;
 
   @CreatedAt
   created: Date;

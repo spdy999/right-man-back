@@ -13,10 +13,10 @@ type Auth {
 type Query {
   users(page: Int): [User!]
   user(username: String!): User
-  whoami: User
+  # whoami: User
 }
 
 type Mutation {
-  login(username: String!, password: String!) : Auth!
+  login(username: String!, password: String!): Auth!
   register(username: String!, password: String!): Auth!
 }

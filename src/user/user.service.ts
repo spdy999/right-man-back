@@ -3,6 +3,7 @@ import {
   Inject,
   HttpException,
   HttpStatus,
+  Logger,
 } from '@nestjs/common';
 import { User } from './user.entity';
 import { USER_REPOSITORY } from './user.constant';
@@ -21,6 +22,7 @@ export class UserService {
     const user = await this.userRepository.findOne<User>({
       where: { username },
     });
+    // Logger.error(user);
     return user.toResponseObject(false);
   }
 

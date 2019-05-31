@@ -1,8 +1,8 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize-typescript';
 
 export const dbConnection = async () => {
   const sequelize = new Sequelize(
-    'postgres://username:password@db:5432/rightman',
+    process.env.DATABASE_URL || 'postgres://username:password@db:5432/rightman',
   );
 
   return await sequelize
