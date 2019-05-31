@@ -5,18 +5,16 @@ import {
   CreatedAt,
   DataType,
   BeforeCreate,
-  HasMany,
 } from 'sequelize-typescript';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { UserResponseObject } from './user.dto';
-import { Idea } from '../idea/idea.entity';
 import { Logger } from '@nestjs/common';
 
 @Table({ tableName: 'user' })
 export class User extends Model<User> {
-  @Column({ primaryKey: true, autoIncrement: true })
-  id: number;
+  // @Column({ primaryKey: true, autoIncrement: true })
+  // id: number;
 
   @CreatedAt
   created: Date;
@@ -27,8 +25,8 @@ export class User extends Model<User> {
   @Column({ type: DataType.TEXT })
   password: string;
 
-  @HasMany(() => Idea, 'authorId')
-  ideas: Idea[];
+  // @HasMany(() => Idea, 'authorId')
+  // ideas: Idea[];
 
   @BeforeCreate
   static async hashPassword(user: User) {

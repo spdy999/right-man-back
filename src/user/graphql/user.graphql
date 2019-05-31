@@ -2,9 +2,21 @@ type User {
   id: String!
   username: String!
   created: String!
-  ideas: [Idea!]
+  # ideas: [Idea!]
+}
+
+type Auth {
+  username: String!
+  token: String!
 }
 
 type Query {
   users(page: Int): [User!]
+  user(username: String!): User
+  whoami: User
+}
+
+type Mutation {
+  login(username: String!, password: String!) : Auth!
+  register(username: String!, password: String!): Auth!
 }

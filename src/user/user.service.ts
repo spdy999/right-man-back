@@ -3,7 +3,6 @@ import {
   Inject,
   HttpException,
   HttpStatus,
-  Logger,
 } from '@nestjs/common';
 import { User } from './user.entity';
 import { USER_REPOSITORY } from './user.constant';
@@ -16,6 +15,13 @@ export class UserService {
   async showAll(): Promise<UserResponseObject[]> {
     const users = await this.userRepository.findAll<User>();
     return users.map(user => user.toResponseObject(false));
+  }
+
+  async read(username: string): Promise<UserResponseObject> {
+    const user = await this.userRepository.findOne<User>({
+      where: { username },
+    });
+    return user.toResponseObject(false);
   }
 
   async login(data: UserDTO): Promise<UserResponseObject> {

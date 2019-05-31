@@ -6,16 +6,26 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    if (!request.headers.authorization) {
-      return false;
+    if (request) {
+      if (!request.headers.authorization) {
+        return false;
+      }
+      request.user = await this.validateToken(request.headers.authorization, request);
+      return true;
+    } else {
+      const ctx: any = GqlExecutionContext.create(context);
+      if (!ctx.headers.authorization) {
+        return false;
+      }
+      ctx.user = await this.validateToken(ctx.headers.authorization, request);
+      return true;
     }
-    await this.validateToken(request.headers.authorization, request);
-    return true;
   }
 
   async validateToken(auth: string, request: any) {
@@ -27,7 +37,8 @@ export class AuthGuard implements CanActivate {
     const token = auth2[1];
 
     try {
-      request.user = await jwt.verify(token, process.env.JWT_SECRET);
+      // TODO: JWT_SECRET should be like this?
+      request.user = await jwt.verify(token, process.env.JWT_SECRET || 'SECRET');
 
       return true;
     } catch (err) {
