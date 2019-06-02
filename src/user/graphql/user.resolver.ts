@@ -14,30 +14,30 @@ export class UserResolver {
   }
 
   @Query()
-  user(@Args('username') username: string) {
-    return this.userService.read(username);
+  user(@Args('email') email: string) {
+    return this.userService.read(email);
   }
 
   // @Query()
   // @UseGuards(new AuthGuard())
   // whoami(@Context('user') user) {
   //   // Logger.error(user);
-  //   const { username } = user;
-  //   return this.userService.read(username);
+  //   const { email } = user;
+  //   return this.userService.read(email);
   // }
 
   @Mutation()
   login(
-    @Args('username') username: string,
+    @Args('email') email: string,
     @Args('password') password: string,
   ) {
-    const user: UserDTO = { username, password };
+    const user: UserDTO = { email, password };
     return this.userService.login(user);
   }
 
   @Mutation()
-  register(@Args() { username, password }) {
-    const user: UserDTO = { username, password };
+  register(@Args() { email, password }) {
+    const user: UserDTO = { email, password };
     return this.userService.register(user);
   }
 

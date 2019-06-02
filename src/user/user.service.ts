@@ -18,37 +18,37 @@ export class UserService {
     return users.map(user => user.toResponseObject(false));
   }
 
-  async read(username: string): Promise<UserResponseObject> {
+  async read(email: string): Promise<UserResponseObject> {
     const user = await this.userRepository.findOne<User>({
-      where: { username },
+      where: { email },
     });
     // Logger.error(user);
     return user.toResponseObject(false);
   }
 
   async login(data: UserDTO): Promise<UserResponseObject> {
-    const { username, password } = data;
+    const { email, password } = data;
     const user = await this.userRepository.findOne<User>({
-      where: { username },
+      where: { email },
     });
     if (!user || !(await user.comparePassword(password))) {
       throw new HttpException(
-        'Invalid username/password',
+        'Invalid email/password',
         HttpStatus.BAD_REQUEST,
       );
     }
     return user.toResponseObject(true);
   }
   async register(data: UserDTO): Promise<UserResponseObject> {
-    const { username } = data;
-    await this.checkExistUser(username);
+    const { email } = data;
+    await this.checkExistUser(email);
     const user = await this.userRepository.create(data);
     return user.toResponseObject(true);
   }
 
-  private async checkExistUser(username: string) {
+  private async checkExistUser(email: string) {
     const user = await this.userRepository.findOne<User>({
-      where: { username },
+      where: { email },
     });
     if (user) {
       throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);

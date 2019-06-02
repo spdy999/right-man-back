@@ -20,7 +20,7 @@ export class User extends Model<User> {
   created: Date;
 
   @Column({ type: DataType.TEXT, unique: true })
-  username: string;
+  email: string;
 
   @Column({ type: DataType.TEXT })
   password: string;
@@ -35,8 +35,8 @@ export class User extends Model<User> {
   }
 
   toResponseObject(showToken: boolean = true): UserResponseObject {
-    const { id, created, username, token } = this;
-    const responseObj: UserResponseObject = { id, created, username };
+    const { id, created, email, token } = this;
+    const responseObj: UserResponseObject = { id, created, email };
     if (showToken) {
       responseObj.token = token;
     }
@@ -48,11 +48,11 @@ export class User extends Model<User> {
   }
 
   private get token() {
-    const { id, username } = this;
+    const { id, email } = this;
     return jwt.sign(
       {
         id,
-        username,
+        email,
       },
       process.env.JWT_SECRET || 'SECRET',
       { expiresIn: '7d' },
