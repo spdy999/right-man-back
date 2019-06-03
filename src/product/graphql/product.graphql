@@ -1,0 +1,9 @@
+type Product {
+  id: String!
+  name: String!
+  user: User
+}
+
+type Mutation {
+  createProduct(name: String!): Product!
+}

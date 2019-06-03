@@ -1,7 +1,7 @@
 import { Resolver, Query, Args, Mutation, Context } from '@nestjs/graphql';
 import { UserService } from '../user.service';
 import { UserDTO } from '../user.dto';
-import { UseGuards, Logger } from '@nestjs/common';
+import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../../shared/auth.guard';
 
 @Resolver('User')
