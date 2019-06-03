@@ -13,7 +13,7 @@ type Auth {
 type Query {
   users(page: Int): [User!]
   user(email: String!): User
-  whoami: User
+  me: User
 }
 
 type Mutation {

@@ -20,7 +20,7 @@ export class UserResolver {
 
   @Query()
   @UseGuards(new AuthGuard())
-  whoami(@Context('user') user) {
+  me(@Context('user') user) {
     const { email } = user;
     return this.userService.read(email);
   }
