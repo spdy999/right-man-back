@@ -17,6 +17,8 @@ export class Product extends Model<Product> {
   @Column
   userId: number;
 
-  @BelongsTo(() => User)
+  @BelongsTo(() => User, {
+    onDelete: 'CASCADE',
+  })
   user: User;
 }

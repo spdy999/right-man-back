@@ -16,4 +16,17 @@ export class ProductService {
     Logger.error(product);
     return product;
   }
+  async delete(productId: string): Promise<boolean> {
+    Logger.error('delete');
+    try {
+      const product = await this.productRepository.destroy({
+        where: { id: productId },
+      });
+      Logger.error(product);
+      return true;
+    } catch (error) {
+      Logger.error(error);
+      return false;
+    }
+  }
 }

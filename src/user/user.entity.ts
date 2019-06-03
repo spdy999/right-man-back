@@ -27,7 +27,9 @@ export class User extends Model<User> {
   @Column({ type: DataType.TEXT })
   password: string;
 
-  @HasMany(() => Product)
+  @HasMany(() => Product, {
+    onDelete: 'CASCADE',
+  })
   products: Product[];
 
   @BeforeCreate

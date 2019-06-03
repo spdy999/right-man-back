@@ -15,4 +15,11 @@ export class ProductResolver {
     const product = await this.productService.create(user.id, { name });
     return product;
   }
+
+  @Mutation()
+  async deleteProduct(@Args('id') id: string): Promise<boolean> {
+    Logger.error(id);
+    const result = await this.productService.delete(id);
+    return result;
+  }
 }
