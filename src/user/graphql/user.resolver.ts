@@ -18,25 +18,21 @@ export class UserResolver {
     return this.userService.read(email);
   }
 
-  // @Query()
-  // @UseGuards(new AuthGuard())
-  // whoami(@Context('user') user) {
-  //   // Logger.error(user);
-  //   const { email } = user;
-  //   return this.userService.read(email);
-  // }
+  @Query()
+  @UseGuards(new AuthGuard())
+  whoami(@Context('user') user) {
+    const { email } = user;
+    return this.userService.read(email);
+  }
 
   @Mutation()
-  login(
-    @Args('email') email: string,
-    @Args('password') password: string,
-  ) {
+  login(@Args('email') email: string, @Args('password') password: string) {
     const user: UserDTO = { email, password };
     return this.userService.login(user);
   }
 
   @Mutation()
-  register(@Args() { email, password }) {
+  register(@Args('email') email: string, @Args('password') password: string) {
     const user: UserDTO = { email, password };
     return this.userService.register(user);
   }

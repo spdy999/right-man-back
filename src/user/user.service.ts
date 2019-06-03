@@ -22,7 +22,10 @@ export class UserService {
     const user = await this.userRepository.findOne<User>({
       where: { email },
     });
-    // Logger.error(user);
+    Logger.error(user);
+    if (!user) {
+      throw new HttpException('Something went wrong', HttpStatus.FORBIDDEN);
+    }
     return user.toResponseObject(false);
   }
 
