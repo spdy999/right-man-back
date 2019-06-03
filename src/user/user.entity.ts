@@ -5,11 +5,13 @@ import {
   CreatedAt,
   DataType,
   BeforeCreate,
+  HasMany,
 } from 'sequelize-typescript';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { UserResponseObject } from './user.dto';
 import { Logger } from '@nestjs/common';
+import { Product } from '../product/product.entity';
 
 @Table({ tableName: 'user' })
 export class User extends Model<User> {
@@ -27,6 +29,8 @@ export class User extends Model<User> {
 
   // @HasMany(() => Idea, 'authorId')
   // ideas: Idea[];
+  @HasMany(() => Product)
+  products: Product[];
 
   @BeforeCreate
   static async hashPassword(user: User) {
