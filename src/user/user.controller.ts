@@ -6,6 +6,7 @@ import {
   UsePipes,
   ValidationPipe,
   UseGuards,
+  Logger,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDTO, UserResponseObject } from './user.dto';
@@ -19,6 +20,7 @@ export class UserController {
   @Get('api/users')
   @UseGuards(new AuthGuard())
   showAllUsers(@User() user): Promise<UserResponseObject[]> {
+    Logger.error(user);
     return this.userService.showAll();
   }
 

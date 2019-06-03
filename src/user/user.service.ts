@@ -32,10 +32,7 @@ export class UserService {
       where: { email },
     });
     if (!user || !(await user.comparePassword(password))) {
-      throw new HttpException(
-        'Invalid email/password',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Invalid email/password', HttpStatus.BAD_REQUEST);
     }
     return user.toResponseObject(true);
   }
