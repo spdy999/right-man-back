@@ -27,8 +27,6 @@ export class User extends Model<User> {
   @Column({ type: DataType.TEXT })
   password: string;
 
-  // @HasMany(() => Idea, 'authorId')
-  // ideas: Idea[];
   @HasMany(() => Product)
   products: Product[];
 
@@ -39,8 +37,8 @@ export class User extends Model<User> {
   }
 
   toResponseObject(showToken: boolean = true): UserResponseObject {
-    const { id, created, email, token } = this;
-    const responseObj: UserResponseObject = { id, created, email };
+    const { id, created, email, token, products } = this;
+    const responseObj: UserResponseObject = { id, created, email, products };
     if (showToken) {
       responseObj.token = token;
     }

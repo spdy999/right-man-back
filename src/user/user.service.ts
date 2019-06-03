@@ -8,6 +8,7 @@ import {
 import { User } from './user.entity';
 import { USER_REPOSITORY } from './user.constant';
 import { UserResponseObject, UserDTO } from './user.dto';
+import { Product } from '../product/product.entity';
 
 @Injectable()
 export class UserService {
@@ -20,6 +21,7 @@ export class UserService {
 
   async read(email: string): Promise<UserResponseObject> {
     const user = await this.userRepository.findOne<User>({
+      include: [Product],
       where: { email },
     });
     Logger.error(user);
